@@ -125,7 +125,310 @@ library(lubridate)
 ```
 
 ```{r}
-tpeTime <- ymd_hms("2020-03-18 13:52:40",
-        tz="Asia/Taipei")
+tpeTime <- ymd_hms("2020-03-18 13:52:40",tz="Asia/Taipei")
+```
+
+```{r}
+vectorExample <- c(2,6,7)
+listeExample <- list(2,6,7)
+
+print(vectorExample)
+print(listeExample)
+```
+
+```{r}
+#用vector儲存
+c("2020-03-31T13:40:55Z",
+  "一芳",
+  "2",
+  "水果茶")
+
+#用list儲存
+library(lubridate)
+"小明交易1"<-list(
+ymd_hms("2020-03-31T13:40:55Z"),
+  "一芳",
+  2,
+  "水果茶"
+)
+print("小明交易1")
+
+```
+
+物件值可以是vector形式，也可以list
+```{r}
+# list含兩個vectors
+`小明108學年課表A` <- list(
+  c("108-1","高級會計學","高等統計學"),
+  c("108-2","食在拉丁美洲")
+)
+print(`小明108學年課表A`)
+```
+
+```{r}
+# list含兩個lists
+`小明108學年課表B` <- list(
+  list("108-1","高級會計學","高等統計學"),
+  list("108-2","食在拉丁美洲")
+)
+print(`小明108學年課表B`)
+```
+
+```{r}
+# list含兩個lists, 子層list又各含兩個vectors
+`小明108學年課表C` <- list(
+  list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表C`)
+```
+
+```{r}
+# list含兩個lists, 子層list又各含兩個vectors
+`小明108學年課表C` <- list(
+  `108學年第1學期`=list(
+    c("108-1"), # 可只寫 "108-1"
+    c("高級會計學","高等統計學")
+       ),
+  `108學年第2學期`=list(
+    c("108-2"),
+    c("食在拉丁美洲")
+  )
+)
+print(`小明108學年課表C`)
+```
+```{r}
+author <- list(
+  "Martin老師", 
+  "mtlin@gm.ntpu.edu.tw", 
+  ymd_hms("2020-03-25T07:17:40Z"))
+
+committer <- list(
+  "emilyluckey", 
+  "emily007@gmail.com",
+  ymd_hms("2020-03-26T08:18:40Z"))
+
+message <- "update"
+```
+
+```{r}
+authorValues <- 
+  list( # 由c() 改list(), 元素命名
+    name="Martin老師", 
+    email="mtlin@gm.ntpu.edu.tw", time="2020-03-25T07:17:40Z"
+  )
+committerValues <- 
+  list( # 由c() 改list(), 元素命名
+    name="emilyluckey", 
+    email="emily007@gmail.com", time="2020-03-26T08:18:40Z"
+  )
+
+commit <- list(
+  author=authorValues,
+  commmitter=committerValues,
+  message="update"
+)
+
+print(commit)
+```
+
+```{r}
+`小明108學年第一學期` <- list(
+  list(
+  name ="Alice老師", 
+  course ="個體經濟學", 
+  score = "85"
+        ),
+  list(
+  name = "Mark老師", 
+  course = "總體經濟學", 
+  score = "73"
+  )
+)
+`小明108學年第二學期` <- list(
+  name = "Jason老師", 
+  course = "作業研究", 
+  score = "90"
+)
+
+print(`小明108學年第一學期`)
+print(`小明108學年第二學期`)
+```
+
+```{r}
+vectorExample <- c("小明","小英","大雄")
+
+# 有多少位置可選：
+length(vectorExample)
+```
+
+```{r}
+vectorExample[[1]]
+vectorExample[[3]]
+```
+
+```{r}
+listExample <- 
+  list(
+    student="小明",
+    `學期`=list(
+      `108-1`=list(
+        list(
+          name="個體經濟學",
+          teacher="Alice",
+          grade=85
+        )
+      ),
+      `108-2`=list(
+        list(
+          name="總體經濟學",
+          teacher="Mark",
+          grade=78
+        )
+      )
+    )
+  )
+# 有多少位置可選：
+length(listExample)
+```
+```{r}
+library(jsonlite)
+fromJSON("https://data.tainan.gov.tw/dataset/4cd9345a-04bf-4328-a97d-314ff78b4763/resource/afc025fc-1ef4-447c-b785-a680391d0ca1/download/tnsport2.json", simplifyDataFrame = F) -> tainanSportsMap
+
+length(tainanSportsMap)
+```
+```{r}
+tainanSportsMap[[1]]
+tainanSportsMap[[1076]]
+```
+
+```{r}
+# 有多少名字可選：
+names(listExample)
+```
+
+```{r}
+listExample$student
+listExample$`學期` # 特殊命名依然要用反頓點呼叫
+```
+
+```{r}
+listExample$student
+listExample$`學期` # 特殊命名依然要用反頓點呼叫
+```
+
+```{r}
+fromJSON("http://data.ntpc.gov.tw/api/v1/rest/datastore/382000000A-000157-002",
+         simplifyDataFrame = F) -> newTaipeiCityVaccine
+```
+
+```{r}
+str(newTaipeiCityVaccine)
+
+```
+
+```{r}
+length(newTaipeiCityVaccine)
+names(newTaipeiCityVaccine)
+```
+
+```{r}
+str(newTaipeiCityVaccine[[1]])
+str(newTaipeiCityVaccine$success)
+str(newTaipeiCityVaccine[["success"]])
+
+str(newTaipeiCityVaccine[[2]], max.level = 1)
+str(newTaipeiCityVaccine$result, max.level = 1)
+str(newTaipeiCityVaccine[["result"]], max.level = 1)
+```
+
+```{r}
+vectorExample
+vectorExample[c(1,3)]
+vectorExample[c(3,2,1)] # 產生重新排列效果
+```
+
+```{r}
+# 顯示到第一層
+str(listExample, max.level=1)
+
+str(listExample[c(1,2)], max.level = 1)
+str(listExample[c(2,1)], max.level = 1)
+```
+
+```{r}
+# 顯示到第一層
+str(listExample, max.level=1)
+
+listExample[c("學期")]
+listExample[c("student","學期")]
+listExample[c("學期","student")]
+```
+
+```{r}
+fromJSON("https://www.dropbox.com/s/qnm9bnz7vccrvcz/taipeiNightMarkets.json?dl=1", simplifyDataFrame = F) -> taipeiNightMarkets
+
+str(taipeiNightMarkets, max.level=1)
+taipeiNightMarkets[c(1,2)]
+taipeiNightMarkets[c("寧夏觀光夜市","華西街觀光夜市")]
+```
+```{r}
+vectorExample
+vectorExample[c(T,T,F)] # 要，要，不要
+```
+
+```{r}
+str(listExample[c(F,T)]) # 不要，要
+str(listExample[c(T,T)]) # 要，要
+```
+
+```{r}
+names(taipeiNightMarkets)
+```
+
+```{r}
+c(T,F,
+  F,F,
+  T,F,
+  F,F,
+  F,T,
+  F,F,
+  F,T)->selectMarkets
+taipeiNightMarkets[selectMarkets]
+
+str(taipeiNightMarkets[c(T,F,
+  F,F,
+  T,F,
+  F,F,
+  F,T,
+  F,F,
+  F,T)], max.level=1)
+```
+
+```{r}
+selectMarkets<- rep(F,14)
+print(selectMarkets)
+selectMarkets[c(1,5,10,14)]<-TRUE
+print(selectMarkets)
+```
+
+```{r}
+str(listExample, max.level = 3)
+```
+
+```{r}
+get1 <- listExample[["學期"]]
+get2 <- listExample["學期"]
+```
+
+```{r}
+get1 # 學期拿出來，有3個元素的list
+str(get1)
 ```
 
